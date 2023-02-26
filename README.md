@@ -1,0 +1,1 @@
+This a a bolierplate for React Google Authentication using PassportJs with Redux.

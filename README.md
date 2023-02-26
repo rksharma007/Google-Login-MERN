@@ -22,6 +22,6 @@ Follow these steps to install and run the development application:
 2. Run cd/client
 3. Run ```npm install```
 4. Run cd ../
-5. Rum ```npm run dev```
+5. Run ```npm run dev```
 
 Do give a star if you like this :)

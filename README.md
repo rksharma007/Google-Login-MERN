@@ -15,3 +15,13 @@ Add the code given below in ```default.json```
     "JWT_SECRET" : "MySecretToken"
 }
 ```
+
+Follow these steps to install and run the development application:
+
+1. Run ```npm install```
+2. Run cd/client
+3. Run ```npm install```
+4. Run cd ../
+5. Rum ```npm run dev```
+
+Do give a star if you like this :)

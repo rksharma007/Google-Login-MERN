@@ -1,6 +1,6 @@
 import propTypes from 'prop-types';
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { Card, Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Logout from '../auth/Logout';
 
@@ -12,17 +12,26 @@ const Dashboard = ({auth:{user, loading }}) => {
       Dashboard
       <hr/>
       <br/>
-      {user && <img src={user && user.imageUrl && user.imageUrl} alt = 'profile img'/>}
-      <table> 
-        <tbody>
-        <tr><td>Name</td><td>{user && user.name}</td></tr>
-        <tr><td>Email</td><td>{user && user.email}</td></tr>
-        <tr><td>Date Joined</td><td>{user && user.date}</td></tr>
-        <tr><td>GoogleId</td><td>{user && user.userId}</td></tr>
-        </tbody>
-      </table>
-      <hr/>
-      <Logout/>
+      <div style={{display:'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <Card style={{maxWidth: '500px'}}>
+          <Card.Header style={{display:'flex', justifyContent: 'center'}}>
+          {user && <img src={user && user.imageUrl && user.imageUrl} alt = 'profile image' style={{borderRadius:'100%'}}/>}
+          </Card.Header>
+          <Card.Body style={{alignItems: 'center'}}>
+            <table> 
+              <tbody>
+              <tr><td>Name</td><td>&nbsp;&nbsp;</td><td>{user && user.name}</td></tr>
+              <tr><td>Email</td><td>&nbsp;&nbsp;</td><td>{user && user.email}</td></tr>
+              <tr><td>Date Joined</td><td>&nbsp;&nbsp;</td><td>{user && user.date}</td></tr>
+              <tr><td>GoogleId</td><td>&nbsp;&nbsp;</td><td>{user && user.userId}</td></tr>
+              </tbody>
+            </table>
+          </Card.Body>
+          <Card.Footer className='text-center'>
+            <Logout/>
+          </Card.Footer>
+        </Card>
+      </div>
     </Container>
   )
 }

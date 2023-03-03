@@ -13,15 +13,17 @@ const Landing = ({ auth: { user, isAuthenticated, loading}, logout }) => {
     <Container>
         
         { !isAuthenticated  &&
-            <Card style={{alignItems: 'center', marginTop: "100px", maxWidth: '400px', height:'300px'}}>
-                <Card.Body>You are not logged in</Card.Body>
-                <Card.Footer>
+            <div style={{display:'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <Card style={{alignItems: 'center', marginTop: "100px", minWidth: '400px', height:'300px'}}>
+                    <Card.Body>You are not logged in</Card.Body>
+                    <Card.Footer>
 
-                    <GoogleLogin/>
+                        <GoogleLogin/>
+                        
+                    </Card.Footer>
                     
-                </Card.Footer>
-                
-            </Card>
+                </Card>
+            </div>
         }
 
         { isAuthenticated && user &&

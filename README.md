@@ -1,8 +1,9 @@
 This is a boilerplate for React Google Authentication using PassportJs in MERN Stack + Redux.
 
-Create a new file  ```default.json``` in config folder
+Create a new file  ```default.json``` in ```config``` folder
 
-Add the code given below in ```default.json```
+Add the code given below in ```default.json```.
+```NOTE```: You need to add your own keys below.
 ```
 {
     "mongoURI" : "YOUR MONGO URI",
@@ -19,9 +20,9 @@ Add the code given below in ```default.json```
 Follow these steps to install and run the development application:
 
 1. Run ```npm install```
-2. Run cd/client
+2. Run ```cd client```
 3. Run ```npm install```
-4. Run cd ../
+4. Run ```cd ../```
 5. Run ```npm run dev```
 
 Do give a star if you like this :)

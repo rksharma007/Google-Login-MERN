@@ -3,6 +3,7 @@ import React from 'react';
 import { Card, Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Logout from '../auth/Logout';
+import Checkout from '../payment/Checkout';
 
 
 const Dashboard = ({auth:{user, loading }}) => {
@@ -28,7 +29,7 @@ const Dashboard = ({auth:{user, loading }}) => {
             </table>
           </Card.Body>
           <Card.Footer className='text-center'>
-            <Logout/>
+            <Logout/> &nbsp;&nbsp; <Checkout/>
           </Card.Footer>
         </Card>
       </div>

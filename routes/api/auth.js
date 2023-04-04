@@ -9,7 +9,7 @@ const frontendUrl = config.get('FRONTEND_URL');
 router.get("/", (req, res) => {
     res.status(200).json({
         googleClientID: config.get('GOOGLE_CLIENT_ID'),
-        googleCLientSecret: config.get('GOOGLE_CLIENT_SECRET'),
+        // googleCLientSecret: config.get('GOOGLE_CLIENT_SECRET'),
     });
 });
 
@@ -33,13 +33,6 @@ router.get(
 router.get("/google",
     passport.authenticate("google", { scope: ["profile", "email"] })
 );
-
-
-router.get('/me', auth, (req, res) => {
-    const me = req.user;
-    console.log(me);
-    res.json(me);
-});
 
 router.get("/logout", (req, res, next) => {
     req.logout(function(err) {

@@ -6,6 +6,7 @@ const cors = require('cors')
 const app = express();
 const passport = require("passport");
 const path = require('path');
+var bodyParser = require('body-parser')
 
 require('dotenv').config();
 require('./models/User');
@@ -13,7 +14,7 @@ require('./models/User');
 // Cors
 app.use(
     cors({
-      origin: "http://localhost:3000", // allow to server to accept request from different origin
+      origin: config.get('FRONTEND_URL'), // allow to server to accept request from different origin
       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
       credentials: true // allow session cookie from browser to pass through
      })
@@ -22,9 +23,12 @@ app.use(
 // Connect to Database
 connectDB();
 
+//for stripe webhook raw body
+app.use('/api/payment/webhook', bodyParser.raw({ type: "*/*" }));
+
 // Init Middleware
-app.use(express.json({extended : false}));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({extended : true}));
+app.use(express.urlencoded({ extended: false }));
 
 app.use(session({
     secret: config.get('SESSION_COOKIE_KEY'),
@@ -43,6 +47,7 @@ require('./services/jwtStrategy')
 // Define Routes
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/user', require('./routes/api/user'));
+app.use('/api/payment', require('./routes/api/stripe'));
 
 
 const PORT = config.get('PORT') || 5000;

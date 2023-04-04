@@ -21,6 +21,8 @@ import PrivateRoute from './components/routing/PrivateRoute';
 // Lazy Loading pages
 const Dashboard = lazy(() => import('./components/dashboard/Dashboard'));
 const Landing = lazy(() => import('./components/layout/Landing'));
+const PaymentSuccess = lazy(() => import('./components/payment/PaymentSuccess'));
+const PaymentCancelled = lazy(() => import('./components/payment/PaymentCancelled'));
 
 const App = ({loginWithGoogleOauth, loadUser, auth}) => {
 
@@ -64,6 +66,9 @@ const App = ({loginWithGoogleOauth, loadUser, auth}) => {
             <PrivateRoute component ={Dashboard} />
           }/>
           {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+          <Route path="/paymentsuccess" element={<PaymentSuccess />} />
+          <Route path="/paymentcancelled" element={<PaymentCancelled />} />
+
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </Suspense>

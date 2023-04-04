@@ -21,6 +21,14 @@ const UserSchema = new mongoose.Schema({
     imageUrl: {
         type: String
     },
+    usertype: {
+        type: String,
+        default: 'free'
+    },
+    validTill: {
+        type: String,
+        default: null
+    },
     date: {
         type: Date,
         default: Date.now

@@ -11,3 +11,7 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 export const AUTH_ERROR = 'AUTH_ERROR';
+
+//PAYMENT
+export const CHECKOUT = 'CHECKOUT';
+export const CHECKOUT_ERROR = 'CHECKOUT_ERROR';

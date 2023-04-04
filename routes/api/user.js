@@ -4,9 +4,13 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 
 router.get('/me', auth, (req, res) => {
-    const me = req.user;
-    //console.log(me);
-    res.json(me);
+    try {
+        const me = req.user;
+        res.json(me);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
 });
 
 

@@ -1,19 +1,20 @@
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import propTypes from 'prop-types';
 import React, { lazy, Suspense, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Route, Routes } from 'react-router';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { loadUser, loginWithGoogleOauth } from "./actions/auth";
+import { LOGOUT } from './actions/types';
 import './CSS/App.css';
+import store from './store';
 import setAuthToken from './utils/setAuthToken';
 
 //Layouts
+import TokenSetter from './components/auth/TokenSetter';
 import Alert from './components/layout/Alert';
-import PreLoader from './components/layout/PreLoader';
-
-// Layout
 import NotFound from './components/layout/NotFound';
+import PreLoader from './components/layout/PreLoader';
 
 // Private Route
 import PrivateRoute from './components/routing/PrivateRoute';
@@ -28,9 +29,14 @@ const App = ({loginWithGoogleOauth, loadUser, auth}) => {
 
   useEffect(() => {
     if(localStorage.token){
-      loadUser();
+      setAuthToken(localStorage.token);
+      loginWithGoogleOauth(localStorage.token);
+      // navigate('/dashboard');
     }
-  }, [loadUser]);
+    window.addEventListener('storage', () => {
+      if (!localStorage.token) store.dispatch({ type: LOGOUT });
+    });
+  }, []);
 
   // useEffect(() => {
   //   if (localStorage.token) {
@@ -42,14 +48,14 @@ const App = ({loginWithGoogleOauth, loadUser, auth}) => {
   //   });
   // }, []);
 
-  useEffect(() => {
-    const cookieJwt = Cookies.get('x-auth-cookie');
-    if (cookieJwt) {
-      Cookies.remove('x-auth-cookie');
-      setAuthToken(cookieJwt);
-      loginWithGoogleOauth(cookieJwt);     
-    }
-  }, []);
+  // useEffect(() => {
+  //   const cookieJwt = Cookies.get('x-auth-cookie');
+  //   if (cookieJwt) {
+  //     Cookies.remove('x-auth-cookie');
+  //     setAuthToken(cookieJwt);
+  //     loginWithGoogleOauth(cookieJwt);     
+  //   }
+  // }, []);
 
   useEffect(() => {
     if ( !auth.loading && auth.token && !auth.isAuthenticated) {
@@ -62,6 +68,7 @@ const App = ({loginWithGoogleOauth, loadUser, auth}) => {
       <Suspense fallback={<PreLoader />}>
         <Routes>
           <Route path='/' element={<Landing />} />
+          <Route path='/login/*' element={<TokenSetter/>} />
           <Route path='/dashboard' element={
             <PrivateRoute component ={Dashboard} />
           }/>
@@ -77,7 +84,7 @@ const App = ({loginWithGoogleOauth, loadUser, auth}) => {
   );
 }
 
-App.propTypes = {
+App.propTypes = { 
   loadUser: propTypes.func.isRequired,
   loginWithGoogleOauth: propTypes.func.isRequired
 }

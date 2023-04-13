@@ -1,3 +1,4 @@
+// import { useNavigate } from 'react-router';
 import api from '../utils/api';
 import setAuthToken from '../utils/setAuthToken';
 import { setAlert } from './alert';
@@ -28,7 +29,7 @@ export const loadUser = () => async (dispatch, getState) => {
 };
  
 //Login User
-export const loginWithGoogleOauth = (token) => async (dispatch) => {
+export const loginWithGoogleOauth = (token, navigate) => async (dispatch) => {
 
     try {
         dispatch({
@@ -42,19 +43,22 @@ export const loginWithGoogleOauth = (token) => async (dispatch) => {
             }
         }
         const res = await api.get(`/user/me`, config);
- 
+
+        localStorage.setItem('token', token);
         dispatch({
             type: LOGIN_SUCCESS,
             payload: {user : res.data, token}
             //payload: token
         });
- 
-        //localStorage.setItem('token', token);
-        await dispatch(loadUser());
- 
+        
+        dispatch(loadUser());
+        navigate("/dashboard");
+
+        // window.location.href = `${frontendUrl}/dashboard`;
         dispatch(setAlert('Logged in! Welcome.', 'success'));
- 
+         
     } catch (err) {
+        // console.log(err)
         const errors = err.response.data.errors;
         if(errors){
             errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
@@ -67,14 +71,18 @@ export const loginWithGoogleOauth = (token) => async (dispatch) => {
 }
 
 // LOGOUT
-export const logout = (history) => async (dispatch) => {
+export const logout = (history, navigate) => async (dispatch) => {
+// const navigate = useNavigate();
+
     try {
       deleteAllCookies();
       await api.get('/auth/logout');
-  
-      dispatch({
+      
+      await dispatch({
         type: LOGOUT
       });
+    //   navigate('/');
+    navigate("/dashboard");
       dispatch(setAlert('B-Bye! See you soon.', 'success'));
       if (history) history.push('/');
     } catch (err) {}

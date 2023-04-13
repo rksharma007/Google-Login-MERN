@@ -6,16 +6,20 @@ const cors = require('cors')
 const app = express();
 const passport = require("passport");
 const path = require('path');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+// const cookieSession = require("cookie-session");
 
 require('dotenv').config();
 require('./models/User');
+require('./services/passport');
+require('./services/jwtStrategy')
 
 // Cors
 app.use(
     cors({
       origin: config.get('FRONTEND_URL'), // allow to server to accept request from different origin
       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+      preflightContinue: true,
       credentials: true // allow session cookie from browser to pass through
      })
   );
@@ -33,14 +37,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(session({
     secret: config.get('SESSION_COOKIE_KEY'),
     resave: false,
-    saveUninitialized: false,
-    cookie: { secure: true }
+    saveUninitialized: true,
+    cookie: { secure: false }
  }));
 
 app.use(passport.initialize());
-//app.use(passport.session());
-require('./services/passport');
-require('./services/jwtStrategy')
+// app.use(passport.session());
+
+
 
 /* ================ Creating Cookie Key and link with Passport JS: End ================  */
 

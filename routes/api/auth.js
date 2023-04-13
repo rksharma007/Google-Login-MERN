@@ -24,8 +24,11 @@ router.get(
     (req, res) => {
         //console.log(req.user);
         const token = req.user.generateJWT();
-        res.cookie('x-auth-cookie', token);
-        res.redirect(`${frontendUrl}/dashboard`);
+        // res.cookie('x-auth-cookie', token);
+        // res.json({'token': token});
+        // res.header('x-auth-token', token);
+        // return res.redirect(`${frontendUrl}/dashboard`);
+        return res.redirect(`${frontendUrl}/login/${token}`);
     },
 );
 
